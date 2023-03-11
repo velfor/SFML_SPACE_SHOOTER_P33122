@@ -1,0 +1,5 @@
+﻿  main.cpp
+D:\forvel\SFML_SPACE_SHOOTER_33122\game.h(28,45): warning C4244: аргумент: преобразование "const float" в "unsigned int", возможна потеря данных
+D:\forvel\SFML_SPACE_SHOOTER_33122\game.h(28,31): warning C4244: аргумент: преобразование "const float" в "unsigned int", возможна потеря данных
+D:\forvel\SFML_SPACE_SHOOTER_33122\game.h(29,28): warning C4244: аргумент: преобразование "const float" в "unsigned int", возможна потеря данных
+  SFML_SPACE_SHOOTER_33122.vcxproj -> D:\forvel\SFML_SPACE_SHOOTER_33122\x64\Debug\SFML_SPACE_SHOOTER_33122.exe
