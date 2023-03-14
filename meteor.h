@@ -6,12 +6,8 @@ private:
 	sf::Sprite sprite;
 	sf::Texture texture;
 	float speedx, speedy;
-public:
-	static std::string mFileNames[];
-	Meteor() {
-		int index = rand() % METEOR_TYPES_QTY;
-		texture.loadFromFile(mFileNames[index]);
-		sprite.setTexture(texture);
+
+	void spawn() {
 		speedy = rand() % 6 + 2;
 		speedx = rand() % 5 - 2;
 		sf::FloatRect bounds = sprite.getGlobalBounds();
@@ -19,6 +15,27 @@ public:
 		float y = -(rand() % (int)(WINDOW_HEIGHT - bounds.height) + bounds.height);
 		sprite.setPosition(x, y);
 	}
+
+public:
+	static std::string mFileNames[];
+	Meteor() {
+		int index = rand() % METEOR_TYPES_QTY;
+		texture.loadFromFile(IMAGES_FOLDER + mFileNames[index]);
+		sprite.setTexture(texture);
+		spawn();
+	}
+
+	void update() {
+		sprite.move(speedx, speedy);
+		sf::FloatRect bounds = sprite.getGlobalBounds();
+		if (bounds.left < -bounds.width || bounds.left > WINDOW_WIDTH ||
+			bounds.top > WINDOW_HEIGHT)
+		{
+			spawn();
+		}
+	}
+
+	sf::Sprite getSprite() { return sprite; }
 };
 
 std::string Meteor::mFileNames[] = { "meteorBrown_big1.png",  "meteorBrown_big2.png",
