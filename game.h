@@ -31,7 +31,7 @@ private:
 
 	void draw() {
 		window.clear();
-		window.draw(player.getSprite());
+		player.draw(window);
 		for (auto m : meteorSprites) {
 			window.draw(m->getSprite());
 		}

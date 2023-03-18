@@ -132,9 +132,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
+    <ClInclude Include="laser.h" />
     <ClInclude Include="meteor.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="settings.h" />
+    <ClInclude Include="textobj.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

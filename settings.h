@@ -15,3 +15,5 @@ const size_t METEOR_QTY = 20;
 const std::string RES_FOLDER = "res\\";
 const std::string FONT_FILE_NAME = "ds-digib.ttf";
 const size_t CHAR_SIZE = 32;
+
+const std::string LASER_FILE_NAME = "laserRed03.png";
