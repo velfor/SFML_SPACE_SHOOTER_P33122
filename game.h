@@ -36,12 +36,18 @@ private:
 				meteor->spawn();
 				player.receiveDamage(meteor->getDamage());
 			}
-			for (auto laser : (*laserSprites)) {
+			for (auto& laser : (*laserSprites)) {
 				sf::FloatRect laserHitBox = laser->getHitBox();
-
+				if (laserHitBox.intersects(meteorHitBox)) {
+					//начисление очков за сбитые метеоры
+					meteor->spawn();
+					laser->setHit();
+				}
 			}
-
 		}
+		//удалить попавшие пули (у которых hit == true)
+		//пройти список пуль с помощью итератора, удалить нужные пули
+		(*laserSprites).remove_if([](Laser* laser) {return laser->isHited(); });
 
 	}
 
