@@ -2,6 +2,7 @@
 #include "settings.h"
 #include "laser.h"
 #include <list>
+#include "textobj.h"
 
 class Player {
 private:
@@ -10,17 +11,21 @@ private:
 	float speedx = 0.f;
 	int lives = 3;
 	std::list<Laser*> lasers;
+	int hp = INITIAL_PLAYER_HP;
+	TextObj hpText;
+	sf::FloatRect bounds;
+	sf::Clock timer;
 
 public:
-	Player() {
+	Player() : hpText(std::to_string(hp), sf::Vector2f(0.f,0.f)) {
 		texture.loadFromFile(IMAGES_FOLDER + PLAYER_FILE_NAME);
 		sprite.setTexture(texture);
-		sf::FloatRect bounds = sprite.getGlobalBounds();
+		bounds = sprite.getGlobalBounds();
 		sprite.setPosition(
 			(WINDOW_WIDTH - bounds.width) / 2, 
 			WINDOW_HEIGHT - bounds.height - 50.f
 		);
-
+		timer.restart();
 	}
 
 	void update() {
@@ -33,7 +38,6 @@ public:
 		}
 		sprite.move(speedx, 0.f);
 		
-		sf::FloatRect bounds = sprite.getGlobalBounds();
 		sf::Vector2f playerPos = sprite.getPosition();
 		if (playerPos.x < 0) {
 			sprite.setPosition(0.f, playerPos.y);
@@ -48,14 +52,15 @@ public:
 		for (auto laser : lasers) {
 			laser->update();
 		}
+		hpText.update("HP:" + std::to_string(hp));
 	}
 
-	//sf::Sprite getSprite() { return sprite; }
 	void draw(sf::RenderWindow& window) {
 		window.draw(sprite);
 		for (auto laser : lasers) {
 			window.draw(laser->getSprite());
 		}
+		window.draw(hpText.getText());
 	}
 
 	int getLives() { return lives; }
@@ -63,7 +68,18 @@ public:
 	void decLives() { lives--; }
 	
 	void fire() {
-		Laser* l = new Laser(sprite.getPosition());
-		lasers.push_back(l);
+		int now = timer.getElapsedTime().asMilliseconds();
+		if (now > FIRE_COOLDOWN) {
+			sf::Vector2f laserPos{ sprite.getPosition().x + bounds.width / 2,  sprite.getPosition().y };
+			Laser* l = new Laser(laserPos);
+			lasers.push_back(l);
+			timer.restart();
+		}
 	}
+	sf::FloatRect getHitBox() { return sprite.getGlobalBounds(); }
+	bool isDead() { return hp <= 0; }
+	bool isAlive() { return hp > 0; }
+	void receiveDamage(int damage) { hp -= damage; }
+
+	std::list<Laser*>* getLasers() { return &lasers; }
 };

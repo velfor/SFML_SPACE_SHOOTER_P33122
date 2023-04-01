@@ -27,15 +27,31 @@ private:
 		lives.update(std::to_string(player.getLives()));
 	}
 
-	void checkCollisions() {}
+	void checkCollisions() {
+		sf::FloatRect playerHitBox = player.getHitBox();
+		auto laserSprites = player.getLasers();
+		for (auto& meteor : meteorSprites) {
+			sf::FloatRect meteorHitBox = meteor->getHitBox();
+			if (meteorHitBox.intersects(playerHitBox)) {
+				meteor->spawn();
+				player.receiveDamage(meteor->getDamage());
+			}
+			for (auto laser : (*laserSprites)) {
+				sf::FloatRect laserHitBox = laser->getHitBox();
+
+			}
+
+		}
+
+	}
 
 	void draw() {
 		window.clear();
-		player.draw(window);
 		for (auto m : meteorSprites) {
 			window.draw(m->getSprite());
 		}
 		window.draw(rect);
+		player.draw(window);
 		window.draw(lives.getText());
 		window.display();
 	}
@@ -55,7 +71,7 @@ public:
 	}
 
 	void play() {
-		while (window.isOpen())
+		while (window.isOpen() && player.isAlive())
 		{
 			checkEvents();
 			update();
