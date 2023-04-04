@@ -21,3 +21,9 @@ const std::string FONT_FILE_NAME = "ds-digib.ttf";
 const size_t CHAR_SIZE = 32;
 
 const std::string LASER_FILE_NAME = "laserRed03.png";
+
+const float BONUS_SPEED = 10.f;
+const int BONUS_RANGE = 10000;
+const int BONUS_CHANCE = 5000;
+
+const std::string MULTI_LASER_BONUS_FILE_NAME = "things_gold.png";

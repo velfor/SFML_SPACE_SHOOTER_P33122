@@ -4,6 +4,7 @@
 #include "meteor.h"
 #include <vector>
 #include "textobj.h"
+#include "bonus.h"
 
 class Game {
 private:
@@ -12,6 +13,7 @@ private:
 	std::vector<Meteor*> meteorSprites;
 	TextObj lives;
 	sf::RectangleShape rect;
+	std::list<Bonus*> bonusSprites;
 
 	void checkEvents() {
 		sf::Event event;
@@ -21,10 +23,13 @@ private:
 
 	void update() {
 		player.update();
-		for (auto m : meteorSprites) {
+		for (auto& m : meteorSprites) {
 			m->update();
 		}
 		lives.update(std::to_string(player.getLives()));
+		for (auto& bonus : bonusSprites) {
+			bonus->update();
+		}
 	}
 
 	void checkCollisions() {
@@ -36,17 +41,26 @@ private:
 				meteor->spawn();
 				player.receiveDamage(meteor->getDamage());
 			}
+			
 			for (auto& laser : (*laserSprites)) {
 				sf::FloatRect laserHitBox = laser->getHitBox();
+				//пуля попала в метеор
 				if (laserHitBox.intersects(meteorHitBox)) {
 					//начисление очков за сбитые метеоры
 					meteor->spawn();
 					laser->setHit();
+					int chance = rand() % BONUS_RANGE;
+					if (chance < BONUS_CHANCE) {
+						Bonus* bonus = new Bonus(
+							(Bonus::BonusType)0, 
+							meteor->getPosition()
+						);
+						bonusSprites.push_back(bonus);
+					}
 				}
 			}
 		}
 		//удалить попавшие пули (у которых hit == true)
-		//пройти список пуль с помощью итератора, удалить нужные пули
 		(*laserSprites).remove_if([](Laser* laser) {return laser->isHited(); });
 
 	}
@@ -59,6 +73,9 @@ private:
 		window.draw(rect);
 		player.draw(window);
 		window.draw(lives.getText());
+		for (auto& bonus : bonusSprites) {
+			bonus->draw(window);
+		}
 		window.display();
 	}
 

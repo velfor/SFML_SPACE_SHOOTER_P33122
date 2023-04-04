@@ -44,6 +44,8 @@ public:
 	}
 
 	int getDamage() { return damage; }
+
+	sf::Vector2f getPosition() { return sprite.getPosition(); }
 };
 
 std::string Meteor::mFileNames[] = { "meteorBrown_big1.png",  "meteorBrown_big2.png",
