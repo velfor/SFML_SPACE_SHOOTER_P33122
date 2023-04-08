@@ -66,6 +66,7 @@ private:
 				sf::FloatRect bonusHitBox = bonus->getHitBox();
 				if (bonusHitBox.intersects(playerHitBox)) {
 					bonus->act(player);
+					bonus->setDel();
 				}
 			}
 		}
@@ -73,7 +74,7 @@ private:
 		(*laserSprites).remove_if([](Laser* laser) {return laser->isHited(); });
 		(*laserSprites).remove_if([](Laser* laser) {return laser->offScreen(); });
 		bonusSprites.remove_if([](Bonus* bonus) {return bonus->offScreen(); });
-
+		bonusSprites.remove_if([](Bonus* bonus) {return bonus->isToDel(); });
 	}
 
 	void draw() {

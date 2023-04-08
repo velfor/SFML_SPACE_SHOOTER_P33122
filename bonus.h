@@ -51,5 +51,9 @@ bool Bonus::offScreen() {
 }
 
 void Bonus::act(Player& player) {
-
+	switch (type) {
+	case MULTI_LASER:
+		player.activateThreeLasers();
+		break;
+	}
 }

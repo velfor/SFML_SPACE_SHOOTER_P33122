@@ -15,6 +15,7 @@ private:
 	TextObj hpText;
 	sf::FloatRect bounds;
 	sf::Clock timer;
+	bool threeLasers = false;
 
 public:
 	Player() : hpText(std::to_string(hp), sf::Vector2f(0.f,0.f)) {
@@ -70,16 +71,33 @@ public:
 	void fire() {
 		int now = timer.getElapsedTime().asMilliseconds();
 		if (now > FIRE_COOLDOWN) {
-			sf::Vector2f laserPos{ sprite.getPosition().x + bounds.width / 2,  sprite.getPosition().y };
-			Laser* l = new Laser(laserPos);
-			lasers.push_back(l);
+			sf::Vector2f centralLaserPos{ sprite.getPosition().x + bounds.width / 2,  sprite.getPosition().y };
+			Laser* centralLaser = new Laser(centralLaserPos);
+			lasers.push_back(centralLaser);
+			if (threeLasers) {
+				sf::Vector2f leftLaserPos{ sprite.getPosition().x,  
+					sprite.getPosition().y + bounds.height/2 };
+				Laser* leftLaser = new Laser(leftLaserPos);
+				lasers.push_back(leftLaser);
+
+				sf::Vector2f rightLaserPos{ sprite.getPosition().x + bounds.width,
+					sprite.getPosition().y + bounds.height / 2 };
+				Laser* rightLaser = new Laser(rightLaserPos);
+				lasers.push_back(rightLaser);
+			}
 			timer.restart();
 		}
 	}
+	
+
 	sf::FloatRect getHitBox() { return sprite.getGlobalBounds(); }
 	bool isDead() { return hp <= 0; }
 	bool isAlive() { return hp > 0; }
 	void receiveDamage(int damage) { hp -= damage; }
 
 	std::list<Laser*>* getLasers() { return &lasers; }
+
+	void activateThreeLasers() { threeLasers = true; }
+
+	void deactivateThreeLasers() { threeLasers = false; }
 };
