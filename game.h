@@ -36,12 +36,13 @@ private:
 		sf::FloatRect playerHitBox = player.getHitBox();
 		auto laserSprites = player.getLasers();
 		for (auto& meteor : meteorSprites) {
+			//игрок с метеорами
 			sf::FloatRect meteorHitBox = meteor->getHitBox();
 			if (meteorHitBox.intersects(playerHitBox)) {
 				meteor->spawn();
 				player.receiveDamage(meteor->getDamage());
 			}
-			
+			//лазеры с метеорами
 			for (auto& laser : (*laserSprites)) {
 				sf::FloatRect laserHitBox = laser->getHitBox();
 				//пуля попала в метеор
@@ -59,9 +60,19 @@ private:
 					}
 				}
 			}
+
+			//бонусы с игроком
+			for (auto& bonus : bonusSprites) {
+				sf::FloatRect bonusHitBox = bonus->getHitBox();
+				if (bonusHitBox.intersects(playerHitBox)) {
+					bonus->act(player);
+				}
+			}
 		}
 		//удалить попавшие пули (у которых hit == true)
 		(*laserSprites).remove_if([](Laser* laser) {return laser->isHited(); });
+		(*laserSprites).remove_if([](Laser* laser) {return laser->offScreen(); });
+		bonusSprites.remove_if([](Bonus* bonus) {return bonus->offScreen(); });
 
 	}
 

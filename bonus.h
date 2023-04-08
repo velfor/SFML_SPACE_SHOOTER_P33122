@@ -11,6 +11,8 @@ public:
 	sf::Vector2f getPosition();
 	void setDel();
 	bool isToDel();
+	bool offScreen();
+	void act(Player& player);
 
 
 private:
@@ -42,3 +44,12 @@ sf::Vector2f Bonus::getPosition() { return sprite.getPosition(); }
 bool Bonus::isToDel() { return del; }
 
 void Bonus::setDel() { del = true; }
+
+bool Bonus::offScreen() {
+	if (sprite.getPosition().y > WINDOW_HEIGHT) return true;
+	return false;
+}
+
+void Bonus::act(Player& player) {
+
+}

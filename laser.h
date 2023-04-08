@@ -30,4 +30,9 @@ public:
 	void setHit() { hit = true; }
 
 	bool isHited() { return hit; }
+
+	bool offScreen() {
+		if (sprite.getPosition().y > WINDOW_HEIGHT) return true;
+		return false;
+	}
 };
