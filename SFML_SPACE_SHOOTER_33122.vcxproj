@@ -137,6 +137,7 @@
     <ClInclude Include="meteor.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="settings.h" />
+    <ClInclude Include="shield.h" />
     <ClInclude Include="textobj.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

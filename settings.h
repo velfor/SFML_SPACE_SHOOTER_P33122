@@ -27,3 +27,7 @@ const int BONUS_RANGE = 10000;
 const int BONUS_CHANCE = 500;
 
 const std::string MULTI_LASER_BONUS_FILE_NAME = "things_gold.png";
+const std::string HP_BONUS_FILE_NAME{ "pill_yellow.png" };
+const size_t HP_BONUS_MEDICINE = 30;
+const std::string SHIELD_BONUS_FILE_NAME{ "shield_gold.png" };
+const std::string SHIELD_FILE_NAME{ "shield1.png" };

@@ -3,22 +3,14 @@
 #include "laser.h"
 #include <list>
 #include "textobj.h"
+#include "shield.h"
 
 class Player {
-private:
-	sf::Sprite sprite;
-	sf::Texture texture;
-	float speedx = 0.f;
-	int lives = 3;
-	std::list<Laser*> lasers;
-	int hp = INITIAL_PLAYER_HP;
-	TextObj hpText;
-	sf::FloatRect bounds;
-	sf::Clock timer;
-	bool threeLasers = false;
 
 public:
-	Player() : hpText(std::to_string(hp), sf::Vector2f(0.f,0.f)) {
+	Player() : hpText(std::to_string(hp), sf::Vector2f(0.f,0.f)),
+		shield(getCenterPosition())
+	{
 		texture.loadFromFile(IMAGES_FOLDER + PLAYER_FILE_NAME);
 		sprite.setTexture(texture);
 		bounds = sprite.getGlobalBounds();
@@ -30,6 +22,7 @@ public:
 	}
 
 	void update() {
+		bounds = sprite.getGlobalBounds();
 		speedx = 0.f;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 			speedx = -PLAYER_SPEED;
@@ -38,6 +31,8 @@ public:
 			speedx = PLAYER_SPEED;
 		}
 		sprite.move(speedx, 0.f);
+
+		shield.setPosition(getCenterPosition());
 		
 		sf::Vector2f playerPos = sprite.getPosition();
 		if (playerPos.x < 0) {
@@ -54,9 +49,14 @@ public:
 			laser->update();
 		}
 		hpText.update("HP:" + std::to_string(hp));
+
+		
 	}
 
 	void draw(sf::RenderWindow& window) {
+		if (shield.isActive()) {
+			shield.draw(window);
+		}
 		window.draw(sprite);
 		for (auto laser : lasers) {
 			window.draw(laser->getSprite());
@@ -100,4 +100,33 @@ public:
 	void activateThreeLasers() { threeLasers = true; }
 
 	void deactivateThreeLasers() { threeLasers = false; }
+
+	void heal(int medicine) { hp += medicine; }
+
+	int getHp() { return hp; }
+
+	void setMaxHp() { hp = INITIAL_PLAYER_HP; }
+
+	void activateShield();
+
+	sf::Vector2f getCenterPosition();
+
+private:
+	sf::Sprite sprite;
+	sf::Texture texture;
+	float speedx = 0.f;
+	int lives = 3;
+	std::list<Laser*> lasers;
+	int hp = INITIAL_PLAYER_HP;
+	TextObj hpText;
+	sf::FloatRect bounds;
+	sf::Clock timer;
+	bool threeLasers = false;
+	Shield shield;
 };
+
+sf::Vector2f Player::getCenterPosition() {
+	return sf::Vector2f{bounds.left + bounds.width/2, bounds.top + bounds.height/2};
+}
+
+void Player::activateShield() {	shield.activate(); }
