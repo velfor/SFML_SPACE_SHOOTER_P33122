@@ -4,18 +4,15 @@
 class Shield {
 public:
 	Shield(sf::Vector2f playerCenterPos);
-	void update();
 	void draw(sf::RenderWindow& window);
-	void activate(); 
-	bool isActive();
-	void deactivate();
 	void setPosition(sf::Vector2f pos);
+	sf::FloatRect getHitBox();
 
 private:
 	sf::Sprite sprite;
 	sf::Texture texture;
 	sf::Clock timer;
-	bool active = false;
+	
 };
 
 Shield::Shield(sf::Vector2f playerCenterPos) {
@@ -26,13 +23,9 @@ Shield::Shield(sf::Vector2f playerCenterPos) {
 	sprite.setPosition(playerCenterPos);
 }
 
-void Shield::activate() { active = true; }
-
-bool Shield::isActive() { return active; }
-
-void Shield::deactivate() { active = false; }
 
 void Shield::setPosition(sf::Vector2f pos) { sprite.setPosition(pos); }
 
-void Shield::update() {}
 void Shield::draw(sf::RenderWindow& window) { window.draw(sprite); }
+
+sf::FloatRect Shield::getHitBox() { return sprite.getGlobalBounds(); }

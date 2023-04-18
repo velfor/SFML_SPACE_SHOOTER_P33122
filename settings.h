@@ -31,3 +31,5 @@ const std::string HP_BONUS_FILE_NAME{ "pill_yellow.png" };
 const size_t HP_BONUS_MEDICINE = 30;
 const std::string SHIELD_BONUS_FILE_NAME{ "shield_gold.png" };
 const std::string SHIELD_FILE_NAME{ "shield1.png" };
+const size_t THREE_LASERS_BONUS_DURATION{ 5000 }; 
+const size_t SHIELD_MARGIN{ 10 };
