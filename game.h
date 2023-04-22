@@ -23,8 +23,8 @@ private:
 
 	void update() {
 		player.update();
-		for (auto& m : meteorSprites) {
-			m->update();
+		for (auto& meteor : meteorSprites) {
+			meteor->update();
 		}
 		lives.update(std::to_string(player.getLives()));
 		for (auto& bonus : bonusSprites) {

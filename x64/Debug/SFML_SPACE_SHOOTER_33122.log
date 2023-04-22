@@ -2,7 +2,7 @@
 D:\forvel\SFML_SPACE_SHOOTER_33122\meteor.h(38,23): warning C4244: =: преобразование "int" в "float", возможна потеря данных
 D:\forvel\SFML_SPACE_SHOOTER_33122\meteor.h(39,23): warning C4244: =: преобразование "int" в "float", возможна потеря данных
 D:\forvel\SFML_SPACE_SHOOTER_33122\meteor.h(41,11): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-D:\forvel\SFML_SPACE_SHOOTER_33122\game.h(97,38): warning C4244: аргумент: преобразование "const float" в "unsigned int", возможна потеря данных
-D:\forvel\SFML_SPACE_SHOOTER_33122\game.h(97,24): warning C4244: аргумент: преобразование "const float" в "unsigned int", возможна потеря данных
-D:\forvel\SFML_SPACE_SHOOTER_33122\game.h(100,28): warning C4244: аргумент: преобразование "const float" в "unsigned int", возможна потеря данных
+D:\forvel\SFML_SPACE_SHOOTER_33122\game.h(105,38): warning C4244: аргумент: преобразование "const float" в "unsigned int", возможна потеря данных
+D:\forvel\SFML_SPACE_SHOOTER_33122\game.h(105,24): warning C4244: аргумент: преобразование "const float" в "unsigned int", возможна потеря данных
+D:\forvel\SFML_SPACE_SHOOTER_33122\game.h(108,28): warning C4244: аргумент: преобразование "const float" в "unsigned int", возможна потеря данных
   SFML_SPACE_SHOOTER_33122.vcxproj -> D:\forvel\SFML_SPACE_SHOOTER_33122\x64\Debug\SFML_SPACE_SHOOTER_33122.exe

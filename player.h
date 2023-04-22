@@ -58,6 +58,11 @@ public:
 
 	sf::FloatRect getShieldHitBox() { return shield.getHitBox(); }
 
+	void checkBonuses();
+
+	void playerControl();
+
+	void updateShield();
 
 private:
 	sf::Sprite sprite;
@@ -93,34 +98,8 @@ shield(getCenterPosition())
 }
 
 void Player::update() {
-	currTime = timer.getElapsedTime().asMilliseconds();
-	if (currTime - prevThreeLasersBonusTime > THREE_LASERS_BONUS_DURATION) {
-		threeLasers = false;
-	}
-	if (shieldMargin <= 0) {
-		shieldActive = false;
-	}
-
-	bounds = sprite.getGlobalBounds();
-	speedx = 0.f;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		speedx = -PLAYER_SPEED;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		speedx = PLAYER_SPEED;
-	}
-	sprite.move(speedx, 0.f);
-
-	shield.setPosition(getCenterPosition());
-
-	sf::Vector2f playerPos = sprite.getPosition();
-	if (playerPos.x < 0) {
-		sprite.setPosition(0.f, playerPos.y);
-	}
-	else if (playerPos.x > WINDOW_WIDTH - bounds.width) {
-		sprite.setPosition(WINDOW_WIDTH - bounds.width, playerPos.y);
-	}
-
+	checkBonuses();
+	playerControl();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 		fire();
 	}
@@ -128,13 +107,7 @@ void Player::update() {
 		laser->update();
 	}
 	hpText.update("HP:" + std::to_string(hp));
-
-	if (shieldIsActive()) {
-		shield.setPosition(getCenterPosition());
-	}
-	else {
-		shield.setPosition(sf::Vector2f{WINDOW_WIDTH/2, WINDOW_HEIGHT + 100.f});
-	}
+	updateShield();
 }
 
 void Player::draw(sf::RenderWindow& window) {
@@ -177,4 +150,42 @@ void Player::activateShield() {
 	shieldActive = true;
 	shieldMargin = SHIELD_MARGIN;
 	prevShieldTime = timer.getElapsedTime().asMilliseconds();
+}
+
+void Player::checkBonuses() {
+	currTime = timer.getElapsedTime().asMilliseconds();
+	if (currTime - prevThreeLasersBonusTime > THREE_LASERS_BONUS_DURATION) {
+		threeLasers = false;
+	}
+	if (shieldMargin <= 0) {
+		shieldActive = false;
+	}
+}
+
+void Player::playerControl() {
+	bounds = sprite.getGlobalBounds();
+	speedx = 0.f;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		speedx = -PLAYER_SPEED;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		speedx = PLAYER_SPEED;
+	}
+	sprite.move(speedx, 0.f);
+	sf::Vector2f playerPos = sprite.getPosition();
+	if (playerPos.x < 0) {
+		sprite.setPosition(0.f, playerPos.y);
+	}
+	else if (playerPos.x > WINDOW_WIDTH - bounds.width) {
+		sprite.setPosition(WINDOW_WIDTH - bounds.width, playerPos.y);
+	}
+}
+
+void Player::updateShield() {
+	if (shieldIsActive()) {
+		shield.setPosition(getCenterPosition());
+	}
+	else {
+		shield.setPosition(sf::Vector2f{ WINDOW_WIDTH / 2, WINDOW_HEIGHT + 100.f });
+	}
 }
