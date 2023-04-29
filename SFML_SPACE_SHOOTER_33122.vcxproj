@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClInclude Include="bonus.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="game_object.h" />
     <ClInclude Include="laser.h" />
     <ClInclude Include="meteor.h" />
     <ClInclude Include="player.h" />

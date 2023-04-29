@@ -5,6 +5,7 @@
 #include <vector>
 #include "textobj.h"
 #include "bonus.h"
+#include "game_object.h"
 
 class Game {
 private:
@@ -88,8 +89,8 @@ private:
 
 	void draw() {
 		window.clear();
-		for (auto m : meteorSprites) {
-			window.draw(m->getSprite());
+		for (auto meteor : meteorSprites) {
+			meteor->draw(window);
 		}
 		window.draw(rect);
 		player.draw(window);
